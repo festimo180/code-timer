@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My First Site</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 id="timer">04:00:00</h1>
+  <p>CODE FOR FOUR HOURS WITH ME - lets goo</p>
+  
+  <div class="container">
+    <div class="box">BOX 1: I CODE</div>
+    <div class="box">BOX 2: I BUILD</div>
+    <div class="box">BOX 3: I LEARN</div>
+  </div>
+
+  <button id="btn">START CODING</button>
+
+  <script>
+    let time = 4 * 60 * 60;
+    let timer = document.getElementById('timer');
+    let btn = document.getElementById('btn');
+    let running = false;
+    let interval;
+
+    btn.onclick = function() {
+      if(!running) {
+        running = true;
+        btn.innerText = "STOP";
+        interval = setInterval(function() {
+          time--;
+          let h = Math.floor(time / 3600);
+          let m = Math.floor((time % 3600) / 60);
+          let s = time % 60;
+          timer.innerText = 
+            String(h).padStart(2,'0') + ":" +
+            String(m).padStart(2,'0') + ":" +
+            String(s).padStart(2,'0');
+          if(time <= 0) clearInterval(interval);
+        }, 1000);
+      } else {
+        running = false;
+        btn.innerText = "START CODING";
+        clearInterval(interval);
+      }
+    }
+  </script>
+</body>
+</html>
