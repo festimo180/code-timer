@@ -1,49 +1,441 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My First Site</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#16090f">
+<title>Velvet Hearts ❤️</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --wine: #4b142a;
+  --rose: #e99ab0;
+  --gold: #e8c994;
+  --cream: #fff5ed;
+  --muted: #d6b9c5;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 0%, #572038 0%, transparent 52%),
+    linear-gradient(145deg, #10070c, #24101b 55%, #10070c);
+  color: var(--cream);
+  font-family: "DM Sans", sans-serif;
+  overflow-x: hidden;
+}
+
+button, input { font: inherit; }
+
+button { cursor: pointer; }
+
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at center, #582039 0%, #210d18 45%, #090509 100%);
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+#intro.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-content {
+  max-width: 650px;
+  animation: rise 1.5s ease both;
+}
+
+.eyebrow {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 10px;
+  margin-bottom: 24px;
+}
+
+.intro-heart {
+  font-size: clamp(65px, 14vw, 110px);
+  display: block;
+  margin: 0 0 20px;
+  filter: drop-shadow(0 0 25px #f27eab88);
+  animation: heartbeat 2s infinite;
+}
+
+h1, h2, .serif {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+}
+
+#intro h1 {
+  font-size: clamp(48px, 10vw, 88px);
+  line-height: .92;
+  margin: 0 0 22px;
+}
+
+#intro p {
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 34px;
+}
+
+.gold { color: var(--gold); }
+
+.primary-btn {
+  border: 1px solid #f1d5a4;
+  color: #251018;
+  background: linear-gradient(135deg, #f6dfb6, #d7a96f);
+  border-radius: 999px;
+  padding: 15px 26px;
+  letter-spacing: 1.5px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 8px 35px #d9a76c30;
+  transition: transform .25s, box-shadow .25s;
+}
+
+.primary-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px #d9a76c55;
+}
+
+#app {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 35px 18px;
+}
+
+.card {
+  width: min(100%, 520px);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: clamp(28px, 7vw, 48px) clamp(20px, 6vw, 42px);
+  border: 1px solid #f0c5d322;
+  border-radius: 28px;
+  background: linear-gradient(145deg, #ffffff0d, #ffffff04);
+  box-shadow: 0 25px 100px #00000050, inset 0 1px #ffffff12;
+  backdrop-filter: blur(18px);
+  animation: rise .8s ease both;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18%;
+  right: 18%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.brand {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+}
+
+.screen { display: none; }
+.screen.active { display: block; animation: rise .6s ease both; }
+
+h2 {
+  font-size: clamp(40px, 9vw, 62px);
+  line-height: .98;
+  margin: 12px 0 18px;
+}
+
+.description {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14px;
+  margin: 0 auto 26px;
+  max-width: 360px;
+}
+
+.ornament {
+  color: var(--rose);
+  font-size: 27px;
+  margin: 5px 0 16px;
+}
+
+input {
+  width: 100%;
+  border: 1px solid #f0c5d333;
+  background: #ffffff08;
+  color: white;
+  border-radius: 14px;
+  padding: 16px;
+  outline: none;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+input::placeholder { color: #c6a7b4; }
+
+input:focus { border-color: var(--rose); }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.secondary-btn {
+  border: 1px solid #f0c5d344;
+  color: var(--cream);
+  background: #ffffff08;
+  border-radius: 999px;
+  padding: 14px 24px;
+  transition: transform .2s, background .2s;
+}
+
+.secondary-btn:hover {
+  transform: translateY(-2px);
+  background: #ffffff15;
+}
+
+.big-heart {
+  font-size: 55px;
+  margin: 18px 0;
+  animation: heartbeat 1.8s infinite;
+}
+
+.result-title {
+  font-size: clamp(38px, 8vw, 56px);
+  line-height: 1;
+  margin: 14px 0;
+}
+
+.result-message {
+  color: var(--muted);
+  line-height: 1.9;
+  font-size: 14px;
+  margin: 20px 0;
+}
+
+.disclaimer {
+  color: #d7b3c2;
+  font-size: 11px;
+  line-height: 1.7;
+  margin-top: 25px;
+}
+
+footer {
+  color: #b996a6;
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-top: 28px;
+}
+
+.particle {
+  position: fixed;
+  bottom: -35px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  animation: floatUp linear forwards;
+}
+
+#app { position: relative; z-index: 1; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  12% { transform: scale(1.09); }
+  24% { transform: scale(1); }
+  36% { transform: scale(1.05); }
+}
+
+@keyframes floatUp {
+  0% { opacity: 0; transform: translateY(0) rotate(0deg); }
+  15% { opacity: .55; }
+  85% { opacity: .35; }
+  100% { opacity: 0; transform: translateY(-110vh) rotate(35deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
 </head>
+
 <body>
-  <h1 id="timer">04:00:00</h1>
-  <p>CODE FOR FOUR HOURS WITH ME - lets goo</p>
-  
-  <div class="container">
-    <div class="box">BOX 1: I CODE</div>
-    <div class="box">BOX 2: I BUILD</div>
-    <div class="box">BOX 3: I LEARN</div>
+
+<section id="intro">
+  <div class="intro-content">
+    <div class="eyebrow">An experience by Velvet Hearts</div>
+    <span class="intro-heart">♥</span>
+    <h1>A little <span class="gold">romance.</span><br>A little mystery.</h1>
+    <p>Some questions deserve a beautiful entrance.<br>Are you ready?</p>
+    <button class="primary-btn" id="enterBtn">Enter the experience →</button>
+    <p style="font-size:10px;letter-spacing:2px;margin-top:24px">MADE WITH A LITTLE DRAMA</p>
   </div>
+</section>
 
-  <button id="btn">START CODING</button>
+<main id="app">
+  <article class="card">
+    <div class="brand">♥ Velvet Hearts ♥</div>
 
-  <script>
-    let time = 4 * 60 * 60;
-    let timer = document.getElementById('timer');
-    let btn = document.getElementById('btn');
-    let running = false;
-    let interval;
+    <section id="nameScreen" class="screen active">
+      <div class="ornament">✦</div>
+      <p class="eyebrow">A private little question</p>
+      <h2>Before we<br><span class="gold">begin...</span></h2>
+      <p class="description">Tell me what to call you, so this little experience feels a little more personal.</p>
+      <form id="nameForm">
+        <input id="nameInput" type="text" maxlength="40" placeholder="Enter your name..." autocomplete="given-name" required>
+        <button class="primary-btn" type="submit">Continue with love →</button>
+      </form>
+    </section>
 
-    btn.onclick = function() {
-      if(!running) {
-        running = true;
-        btn.innerText = "STOP";
-        interval = setInterval(function() {
-          time--;
-          let h = Math.floor(time / 3600);
-          let m = Math.floor((time % 3600) / 60);
-          let s = time % 60;
-          timer.innerText = 
-            String(h).padStart(2,'0') + ":" +
-            String(m).padStart(2,'0') + ":" +
-            String(s).padStart(2,'0');
-          if(time <= 0) clearInterval(interval);
-        }, 1000);
-      } else {
-        running = false;
-        btn.innerText = "START CODING";
-        clearInterval(interval);
-      }
-    }
-  </script>
+    <section id="questionScreen" class="screen">
+      <div class="ornament">♡</div>
+      <p class="eyebrow">A question just for you</p>
+      <h2 id="questionTitle">One little question...</h2>
+      <p class="description">I've been meaning to ask you something. Take a breath, and choose honestly.</p>
+      <div class="big-heart">💗</div>
+      <h2 style="font-size:clamp(32px,7vw,45px)">Will you be my girlfriend?</h2>
+      <div class="actions">
+        <button id="yesBtn" class="primary-btn">YES ♥</button>
+        <button id="noBtn" class="secondary-btn">No, sorry</button>
+      </div>
+    </section>
+
+    <section id="resultScreen" class="screen">
+      <div class="ornament">✦ ♡ ✦</div>
+      <p class="eyebrow">The plot twist</p>
+      <h2 class="result-title">Got you, <span id="resultName" class="gold">darling</span>!</h2>
+      <div class="big-heart">😈</div>
+      <p id="resultMessage" class="result-message"></p>
+      <p class="disclaimer">No hard feelings, please. This was a playful prank, not a real relationship proposal. ❤️</p>
+      <button id="restartBtn" class="primary-btn">Experience it again ↻</button>
+    </section>
+
+    <footer>MADE WITH DRAMA & A LITTLE MISCHIEF</footer>
+  </article>
+</main>
+
+<script>
+const intro = document.getElementById("intro");
+const enterBtn = document.getElementById("enterBtn");
+const nameForm = document.getElementById("nameForm");
+const nameInput = document.getElementById("nameInput");
+const questionTitle = document.getElementById("questionTitle");
+const resultName = document.getElementById("resultName");
+const resultMessage = document.getElementById("resultMessage");
+
+let visitorName = "darling";
+let introTimer;
+
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+  document.getElementById(id).classList.add("active");
+}
+
+function enterExperience() {
+  intro.classList.add("hide");
+  clearTimeout(introTimer);
+}
+
+enterBtn.addEventListener("click", enterExperience);
+
+introTimer = setTimeout(enterExperience, 15000);
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") enterExperience();
+});
+
+nameForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  visitorName = nameInput.value.trim().slice(0, 40);
+  if (!visitorName) {
+    nameInput.focus();
+    return;
+  }
+
+  questionTitle.textContent = `Alright, ${visitorName}...`;
+  showScreen("questionScreen");
+});
+
+function revealPrank(answer) {
+  resultName.textContent = visitorName;
+
+  if (answer === "yes") {
+    resultMessage.textContent =
+      `Awww, ${visitorName}, you actually said YES! 😭❤️ I hope you didn't start planning our wedding already, because... I'm relationship intolerant. IT WAS A PRANK! 😂💀`;
+  } else {
+    resultMessage.textContent =
+      `Wow, ${visitorName}! You said NO! 😂💔 Either way, I have a confession: I'm relationship intolerant. IT WAS A PRANK! You have officially survived Velvet Hearts. 😈❤️`;
+  }
+
+  showScreen("resultScreen");
+  burstHearts();
+}
+
+document.getElementById("yesBtn").addEventListener("click", () => {
+  revealPrank("yes");
+});
+
+document.getElementById("noBtn").addEventListener("click", () => {
+  revealPrank("no");
+});
+
+document.getElementById("restartBtn").addEventListener("click", () => {
+  nameInput.value = "";
+  visitorName = "darling";
+  showScreen("nameScreen");
+});
+
+function burstHearts() {
+  for (let i = 0; i < 18; i++) {
+    setTimeout(createParticle, i * 90);
+  }
+}
+
+function createParticle() {
+  const particle = document.createElement("span");
+  particle.className = "particle";
+  particle.textContent = ["♥", "♡", "✦", "💗"][Math.floor(Math.random() * 4)];
+  particle.style.left = Math.random() * 100 + "vw";
+  particle.style.fontSize = (12 + Math.random() * 18) + "px";
+  particle.style.color = ["#e99ab0", "#e8c994", "#fff5ed"][Math.floor(Math.random() * 3)];
+  particle.style.animationDuration = (5 + Math.random() * 5) + "s";
+  document.body.appendChild(particle);
+  particle.addEventListener("animationend", () => particle.remove());
+}
+
+setInterval(createParticle, 900);
+</script>
 </body>
 </html>
+
